@@ -22,6 +22,9 @@
             function borrar(id, pareja) {
                 location.href = "listarRegalos?action=borrar&articulo=" + id + "&parejaSelect=" + pareja;
             }
+            function finalizar(){
+                location.href = "listarRegalos";
+            }
         </script>
     </head>
     <body>
@@ -30,23 +33,23 @@
             <h1>Lista de regalos</h1>
             <%@include file="notificar.jsp" %>
             <div class="input-group">
-                <select class="custom-select" id="parejaSelect">
+                <select class="custom-select" id="parejaSelect" <c:if test="${pareja!=null}"> disabled="true" </c:if>>
                     <option>Seleccione pareja...</option>
                     <c:forEach items="${listParejas}" var="r">
                         <option value="${r.id}"
-                        <c:if test="${pareja!=null&&pareja.id==r.id}"> selected </c:if>
+                                <c:if test="${pareja!=null&&pareja.id==r.id}"> selected</c:if>
                          > ${r.nombre1} y ${r.nombre2} (${r.fechaCasamientoTexto})
                         </option>
                     </c:forEach>
                 </select>
                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button" onClick="elegirPareja()">Elegir</button>
+                    <button class="btn btn-outline-secondary" type="button" onClick="elegirPareja()" <c:if test="${pareja!=null}"> disabled="true" </c:if>>Elegir</button>
                 </div>
             </div>
             <c:if test="${pareja!=null}">
                 <br>
                 <h3>Lista de regalos de ${pareja.nombre1} y ${pareja.nombre2} (${pareja.fechaCasamientoTexto})</h3>
-                <p>Los articulos celestes son parte de la lista, puedes quitarlos con el botón de la derecha. Los articulos grises no fueron incluirlos y puedes agregarlos con el botón +</p>
+                <p>Los articulos celestes son parte de la lista, puedes quitarlos con el botón de la derecha. Los articulos grises no fueron incluirlos y puedes agregarlos con el botón +. Cuando termines de armar la lista preciona el botón finalizar, al final de la pagina</p>
                 <ul class="list-group">
                     <c:forEach items="${listArticulosSeleccionados}" var="r">
                         <li class="list-group-item list-group-item-primary  d-flex justify-content-between align-items-center"> (${r.codigo}) ${r.denominacion} 
@@ -74,6 +77,8 @@
                     </c:forEach>
 
                 </ul>
+                <br>
+                <button type="button" onclick="finalizar()"class="btn btn-primary btn-lg btn-block">Finalizar</button>
             </c:if>
         </div>
     </body>
