@@ -14,6 +14,9 @@
     </head>
     <body>
         <%@include file="menu_admin.jsp" %>
-        <h1>A Regalar!</h1>
+        <div class="container">
+            <h1>A Regalar!</h1>    
+        </div>
+        
     </body>
 </html>
