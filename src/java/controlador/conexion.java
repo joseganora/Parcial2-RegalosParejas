@@ -117,7 +117,7 @@ public class conexion {
         ArrayList<Articulo> art=new ArrayList<Articulo>();
         try {
             abrirConexion();
-            PreparedStatement stmt=con.prepareStatement("SELECT * from Articulo");
+            PreparedStatement stmt=con.prepareStatement("SELECT * from Articulo order by idTipo");
             ResultSet rs =stmt.executeQuery();
             while(rs.next()){
                 art.add(new Articulo(rs.getInt("id"), rs.getString("codigo"), rs.getString("denominacion"), rs.getFloat("precioUnitario"), rs.getInt("idTipo")));
@@ -277,6 +277,25 @@ public class conexion {
             PreparedStatement stmt=con.prepareStatement("insert into regalo (idPareja,idArticulo) values (?,?)");
             stmt.setInt(1, regalo.getIdPareja());
             stmt.setInt(2, regalo.getIdArticulo());
+            band=(stmt.executeUpdate()==1);
+            stmt.close();
+            cerrarConexion();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(conexion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return band;
+    }
+    public boolean regalar(Regalo regalo) {
+        boolean band=false;
+        try {
+            abrirConexion();
+            PreparedStatement stmt=con.prepareStatement("update regalo set idComprador=?, cantidad=?, regalado=? where idPareja=? and idArticulo=?");
+            stmt.setInt(1, regalo.getIdComprador());
+            stmt.setInt(2, regalo.getCantidad());
+            stmt.setBoolean(3, regalo.isRegalado());
+            stmt.setInt(4, regalo.getIdPareja());
+            stmt.setInt(5, regalo.getIdArticulo());
             band=(stmt.executeUpdate()==1);
             stmt.close();
             cerrarConexion();
@@ -489,6 +508,26 @@ public class conexion {
             abrirConexion();
             PreparedStatement stmt=con.prepareStatement("SELECT * from comprador where upper(nombre) like upper(?)");
             stmt.setString(1, "%"+cont+"%");
+            ResultSet rs =stmt.executeQuery();
+            while(rs.next()){
+                art.add(new Comprador(rs.getInt("id"), rs.getString("nombre"), rs.getInt("idPareja"), rs.getInt("idTipoRelacion")));
+            }
+            rs.close();
+            stmt.close();
+            cerrarConexion();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(conexion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return art;
+    }
+    public ArrayList<Comprador> getCompradores(int cont) {
+        ArrayList<Comprador> art=new ArrayList<Comprador>();
+        try {
+            abrirConexion();
+            PreparedStatement stmt=con.prepareStatement("SELECT * from comprador where idPareja=?");
+            stmt.setInt(1,cont);
             ResultSet rs =stmt.executeQuery();
             while(rs.next()){
                 art.add(new Comprador(rs.getInt("id"), rs.getString("nombre"), rs.getInt("idPareja"), rs.getInt("idTipoRelacion")));

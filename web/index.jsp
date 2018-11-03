@@ -47,7 +47,8 @@
                 <div class="col">
                     <p class="lead">Novios:</p>
                     <div class="list-group ">
-                        <%                            for (Pareja par : listParejas) {
+                        <%                            
+                            for (Pareja par : listParejas) {
                         %>
                         <button type="button" onclick="elegir(<%=par.getId()%>)" class=
                                 <%
@@ -82,7 +83,7 @@
                                     <%
                             } else {
                                 %>
-                                <ul class="list-group">
+                                <ul class="list-group ">
                                 <%
                                 for (Articulo r : regalos) {
                                         %>

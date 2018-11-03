@@ -56,22 +56,26 @@
                 </div>
             </div>
             
-            <ul class="list-group">
-                <c:forEach items="${list}" var="r">
-                    <li class="list-group-item  d-flex justify-content-between align-items-center"> (${r.codigo}) ${r.denominacion} 
-                        <c:forEach items="${listTipos}" var="s">
-                            <c:if test="${s.id==r.idTipo}">
-                             - Tipo: ${s.denominacion}
-                            </c:if>
+            <div class="container" style="max-height: 600px;display: flex;">
+
+                <ul class="list-group" style="overflow-y:scroll;width: 100%;">
+                        <c:forEach items="${list}" var="r">
+                            <li class="list-group-item  d-flex justify-content-between align-items-center" style="padding: 20px;"> (${r.codigo}) ${r.denominacion} 
+                                <c:forEach items="${listTipos}" var="s">
+                                    <c:if test="${s.id==r.idTipo}">
+                                     - Tipo: ${s.denominacion}
+                                    </c:if>
+                                </c:forEach>
+                                <div>
+                                    <a class="badge-pill"href="#" onclick="editar(${r.id})"><img src="baseline-edit-24px.svg"/></a>
+                                    <a class="badge-pill" href="#" onclick="borrar(${r.id})"><img src="baseline-delete-24px.svg"/></a>
+                                </div>
+
+                            </li>
                         </c:forEach>
-                        <div>
-                            <a class="badge-pill"href="#" onclick="editar(${r.id})"><img src="baseline-edit-24px.svg"/></a>
-                            <a class="badge-pill" href="#" onclick="borrar(${r.id})"><img src="baseline-delete-24px.svg"/></a>
-                        </div>
-                        
-                    </li>
-                </c:forEach>
-            </ul>
+                    </ul>
+               
+                </div>
             <br>
 
             <button type="button" data-toggle="modal" data-target="#agregar" class="btn btn-primary">Agregar</button>

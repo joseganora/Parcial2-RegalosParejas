@@ -25,6 +25,14 @@ public class Regalo {
         this.cantidad = cantidad;
         this.regalado = regalado;
     }
+    public Regalo( int idPareja, int idArticulo, int idComprador, int cantidad, boolean regalado) {
+        this.id = 0;
+        this.idPareja = idPareja;
+        this.idArticulo = idArticulo;
+        this.idComprador = idComprador;
+        this.cantidad = cantidad;
+        this.regalado = regalado;
+    }
 
     public Regalo(int idPareja, int idArticulo) {
         this.idPareja = idPareja;
