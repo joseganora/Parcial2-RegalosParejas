@@ -55,7 +55,7 @@
             </div>
             <ul class="list-group">
                 <c:forEach items="${list}" var="r">
-                    <li class="list-group-item  d-flex justify-content-between align-items-center"> ${r.nombre1} y ${r.nombre2} (${r.fechaCasamiento})
+                    <li class="list-group-item  d-flex justify-content-between align-items-center"> ${r.nombre1} y ${r.nombre2} (${r.fechaCasamientoTexto})
                         <div>
                             <a class="badge-pill"href="#" onclick="editar(${r.id})"><img src="baseline-edit-24px.svg"/></a>
                             <a class="badge-pill" href="#" onclick="borrar(${r.id})"><img src="baseline-delete-24px.svg"/></a>
@@ -156,7 +156,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="fecha">Fecha de casamiento</label>
-                                <input type="date" class="form-control" name="fecha" value="${editar.fechaCasamiento}" placeholder="Fecha de casamiento" required >
+                                <input type="date" class="form-control" name="fecha" value="${editar.fechaCasamientoTexto}" placeholder="Fecha de casamiento" required >
                             </div>
                             <div class="form-group">
                                 <label for="comercio">Comercio</label>

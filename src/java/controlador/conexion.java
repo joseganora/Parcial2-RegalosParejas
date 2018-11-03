@@ -74,6 +74,45 @@ public class conexion {
         
         return user;
     }
+    public int countRegalosPendientes(int id){
+        int cant=0;
+        try {
+            abrirConexion();
+            PreparedStatement stmt=con.prepareStatement("SELECT count(*) cant from regalo where idPareja=? and idComprador is null");
+            stmt.setInt(1, id);
+            ResultSet rs =stmt.executeQuery();
+            if(rs.next()){
+                cant=rs.getInt("cant");
+            }
+            rs.close();
+            stmt.close();
+            cerrarConexion();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(conexion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return cant;
+    }
+    public ArrayList<Articulo> getRegalosPendientes(int idParejaSeleccionada){
+        ArrayList<Articulo> art=new ArrayList<Articulo>();
+        try {
+            abrirConexion();
+            PreparedStatement stmt=con.prepareStatement("SELECT a.* from Articulo a join regalo r on a.id=r.idArticulo where r.idPareja=? and r.idComprador is null");
+            stmt.setInt(1, idParejaSeleccionada);
+            ResultSet rs =stmt.executeQuery();
+            while(rs.next()){
+                art.add(new Articulo(rs.getInt("id"), rs.getString("codigo"), rs.getString("denominacion"), rs.getFloat("precioUnitario"), rs.getInt("idTipo")));
+            }
+            rs.close();
+            stmt.close();
+            cerrarConexion();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(conexion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return art;
+    }
     public ArrayList<Articulo> getArticulos(){
         ArrayList<Articulo> art=new ArrayList<Articulo>();
         try {
@@ -81,7 +120,7 @@ public class conexion {
             PreparedStatement stmt=con.prepareStatement("SELECT * from Articulo");
             ResultSet rs =stmt.executeQuery();
             while(rs.next()){
-                art.add(new Articulo(rs.getInt("id"), rs.getString("codigo"), rs.getString("denominacion"), rs.getInt("precioUnitario"), rs.getInt("idTipo")));
+                art.add(new Articulo(rs.getInt("id"), rs.getString("codigo"), rs.getString("denominacion"), rs.getFloat("precioUnitario"), rs.getInt("idTipo")));
             }
             rs.close();
             stmt.close();

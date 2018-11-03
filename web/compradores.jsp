@@ -105,7 +105,7 @@
                                 <select class="form-control" name="pareja" required >
                                     <c:forEach items="${listParejas}" var="r">
                                         <option value="${r.id}">
-                                            ${r.nombre1} y ${r.nombre2} (${r.fechaCasamiento})
+                                            ${r.nombre1} y ${r.nombre2} (${r.fechaCasamientoTexto})
                                         </option>
                                     </c:forEach>
 
@@ -163,7 +163,7 @@
                                                 </c:otherwise>
                                             </c:choose>
 
-                                            ${r.nombre1} y ${r.nombre2} (${r.fechaCasamiento})
+                                            ${r.nombre1} y ${r.nombre2} (${r.fechaCasamientoTexto})
                                         </option>
                                     </c:forEach>
 

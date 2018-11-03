@@ -4,6 +4,13 @@
     Author     : PEPE
 --%>
 
+<%@page import="modelo.Articulo"%>
+<%@page import="Servlets.articulos"%>
+<%@page import="modelo.Regalo"%>
+<%@page import="controlador.conexion"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="modelo.Pareja"%>
+<%@page import="modelo.Pareja"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -15,37 +22,87 @@
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script>
+            function elegir(id) {
+                location.href = "index.jsp?parejaSelect=" + id;
+            }
+        </script>
     </head>
     <body>
         <%@include file="header.jsp" %>
         <br>
-        <div class="container">
+        <%
+            conexion c = new conexion();
+            ArrayList<Pareja> listParejas = c.getParejas();
+            String pareja = request.getParameter("parejaSelect");
+            int idParejaSeleccionada = -1;
 
+            if (pareja != null) {
+                idParejaSeleccionada = Integer.parseInt(pareja);
+            }
+
+        %>
+        <div class="container">
             <div class="row">
                 <div class="col">
                     <p class="lead">Novios:</p>
-                    <div class="list-group">
-                        <button type="button" class="list-group-item list-group-item-action active">Nombre 1 <span class="badge badge-primary badge-pill">14</span></button>
-                        <button type="button" class="list-group-item list-group-item-action">Nombre 2 risus <span class="badge badge-primary badge-pill">14</span></button>
-                        <button type="button" class="list-group-item list-group-item-action">Nombre 3 consectetur ac <span class="badge badge-primary badge-pill">14</span></button>
-                        <button type="button" class="list-group-item list-group-item-action">Nombre 4 at eros <span class="badge badge-primary badge-pill">14</span></button>
+                    <div class="list-group ">
+                        <%                            for (Pareja par : listParejas) {
+                        %>
+                        <button type="button" onclick="elegir(<%=par.getId()%>)" class=
+                                <%
+                                    if (idParejaSeleccionada != -1 && par.getId() == idParejaSeleccionada) {
+                                %>
+                                "list-group-item d-flex justify-content-between align-items-center list-group-item-action active">
+                            <%
+                            } else {
+                            %>
+                            "list-group-item d-flex justify-content-between align-items-center list-group-item-action">
+                            <%
+                                }
+                            %>
+                            <%=par.getNombre1()%> y <%=par.getNombre2()%> (<%=par.getFechaCasamientoTexto()%>) <span class="badge badge-primary badge-pill"><%=c.countRegalosPendientes(par.getId())%></span></button>
+                            <%
+                                }
+                            %>
                     </div>
                 </div>
                 <div class="col">
-                    <p class="lead">Regalos Pedidos Restantes:</p>
-                    <ul class="list-group">
-                        <li class="list-group-item">Cras justo odio</li>
-                        <li class="list-group-item">Dapibus ac facilisis in</li>
-                        <li class="list-group-item">Cras justo odio</li>
-                        <li class="list-group-item">Dapibus ac facilisis in</li>
-                        <li class="list-group-item">Cras justo odio</li>
-                        <li class="list-group-item">Dapibus ac facilisis in</li>
-                        <li class="list-group-item">Cras justo odio</li>
-                        <li class="list-group-item">Dapibus ac facilisis in</li>
-                        <li class="list-group-item">Cras justo odio</li>
-                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                    <%
+                        if (idParejaSeleccionada > 0) {
+                            %>
+                            <p class="lead">Regalos Pedidos Restantes:</p>
+                            <%
+                            ArrayList<Articulo> regalos = c.getRegalosPendientes(idParejaSeleccionada);
+                            if (regalos.isEmpty()) {
+                                    %>
+                                    <div class="alert alert-primary" role="alert">
+                                        Lista de regalos pendientes vacía
+                                    </div>
+                                    <%
+                            } else {
+                                %>
+                                <ul class="list-group">
+                                <%
+                                for (Articulo r : regalos) {
+                                        %>
+                                        <li class="list-group-item">(<%=r.getCodigo()%>) <%=r.getDenominacion()%> - $ <%=r.getPrecioUnitario()%></li>
+                                            <%
+                                    }
+                                            %>
+                                    </ul>
+                                    <%
+                                }
 
-                    </ul>
+                        } else {
+                            %>
+                                <br><br>
+                                <div class="alert alert-primary align-content-center" role="alert">
+                                    <img src="baseline-keyboard_backspace-24px.svg"/>  Elige una pareja de la lista de novios
+                                </div>
+                            <%
+                        }
+                    %>
                 </div>
             </div>
 
@@ -74,12 +131,6 @@
                                 <label for="password">Password</label>
                                 <input type="password" class="form-control" name="contra" id="password" placeholder="Contraseña">
                             </div>
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="dropdownCheck2">
-                                <label class="form-check-label" for="dropdownCheck2">
-                                    Recordarme
-                                </label>
-                            </div>
                             <button type="submit" class="btn btn-primary">Ingresar</button>
                             <div class="modal" tabindex="-1" role="dialog"> 
                         </form>
@@ -106,9 +157,9 @@
     </script>
     <%
         }
-    if(request.getParameter("salir")!=null){
-    request.getSession().removeAttribute("nombreUsuario");
-    }
+        if (request.getParameter("salir") != null) {
+            request.getSession().removeAttribute("nombreUsuario");
+        }
     %>
 </body>
 </html>

@@ -35,7 +35,7 @@
                     <c:forEach items="${listParejas}" var="r">
                         <option value="${r.id}"
                         <c:if test="${pareja!=null&&pareja.id==r.id}"> selected </c:if>
-                         > ${r.nombre1} y ${r.nombre2} (${r.fechaCasamiento})
+                         > ${r.nombre1} y ${r.nombre2} (${r.fechaCasamientoTexto})
                         </option>
                     </c:forEach>
                 </select>
@@ -45,7 +45,8 @@
             </div>
             <c:if test="${pareja!=null}">
                 <br>
-                <h3>Lista de regalos de ${pareja.nombre1} y ${pareja.nombre2} (${pareja.fechaCasamiento})</h3>
+                <h3>Lista de regalos de ${pareja.nombre1} y ${pareja.nombre2} (${pareja.fechaCasamientoTexto})</h3>
+                <p>Los articulos celestes son parte de la lista, puedes quitarlos con el botón de la derecha. Los articulos grises no fueron incluirlos y puedes agregarlos con el botón +</p>
                 <ul class="list-group">
                     <c:forEach items="${listArticulosSeleccionados}" var="r">
                         <li class="list-group-item list-group-item-primary  d-flex justify-content-between align-items-center"> (${r.codigo}) ${r.denominacion} 

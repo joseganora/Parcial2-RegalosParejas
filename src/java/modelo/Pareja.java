@@ -6,6 +6,7 @@
 package modelo;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 /**
  *
@@ -41,6 +42,10 @@ public class Pareja {
 
     public Date getFechaCasamiento() {
         return fechaCasamiento;
+    }
+    
+    public String getFechaCasamientoTexto(){
+       return (new SimpleDateFormat("dd/MM/YYYY")).format(fechaCasamiento);
     }
 
     public void setFechaCasamiento(Date fechaCasamiento) {
