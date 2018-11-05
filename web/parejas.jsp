@@ -13,6 +13,7 @@
         <meta name="viewport" content="width=device-width, user-scalable=no">
         <title>JSP Page</title>
         <script>
+       
             function borrar(id) {
                 var r = confirm("¿Seguro que desea borrar este producto?");
                 if (r == true) {
@@ -28,7 +29,7 @@
             }
         </script>
     </head>
-    <body>
+    <body >
         <%@include file="menu_admin.jsp" %>
         <div class="container ">
 
@@ -60,7 +61,7 @@
                             <a class="badge-pill"href="#" onclick="editar(${r.id})"><img src="baseline-edit-24px.svg"/></a>
                             <a class="badge-pill" href="#" onclick="borrar(${r.id})"><img src="baseline-delete-24px.svg"/></a>
                         </div>
-                        
+
                     </li>
                 </c:forEach>
             </ul>

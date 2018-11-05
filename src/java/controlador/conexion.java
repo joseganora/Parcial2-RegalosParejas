@@ -601,6 +601,44 @@ public class conexion {
         
         return art;
     }
+    public ArrayList<Comercio> getComercioConPareja() {
+        ArrayList<Comercio> art=new ArrayList<Comercio>();
+        try {
+            abrirConexion();
+            PreparedStatement stmt=con.prepareStatement("SELECT c.* from comercio c where exists (select id from pareja where idComercio=c.id)");
+            ResultSet rs =stmt.executeQuery();
+            while(rs.next()){
+                art.add(new Comercio(rs.getInt("id"), rs.getString("denominacion")));
+            }
+            rs.close();
+            stmt.close();
+            cerrarConexion();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(conexion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return art;
+    }
+    public ArrayList<Comercio> getComercioSinPareja() {
+        ArrayList<Comercio> art=new ArrayList<Comercio>();
+        try {
+            abrirConexion();
+            PreparedStatement stmt=con.prepareStatement("SELECT 'no',c.* from comercio c where not exists (select id from pareja where idComercio=c.id)");
+            ResultSet rs =stmt.executeQuery();
+            while(rs.next()){
+                art.add(new Comercio(rs.getInt("id"), rs.getString("denominacion")));
+            }
+            rs.close();
+            stmt.close();
+            cerrarConexion();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(conexion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return art;
+    }
     public ArrayList<TipoRelacion> getTipoRelacion() {
         ArrayList<TipoRelacion> art=new ArrayList<TipoRelacion>();
         try {

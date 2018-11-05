@@ -38,11 +38,11 @@
                     Reportes
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Parejas por comercio</a>
-                    <a class="dropdown-item" href="#">Facturacion por pareja</a>
-                    <a class="dropdown-item" href="#">Parejas con mas de $10000</a>
+                    <a class="dropdown-item" href="reportes?action=1">Parejas por comercio</a>
+                    <a class="dropdown-item" href="reportes?action=2">Facturacion por pareja</a>
+                    <a class="dropdown-item" href="reportes?action=3">Parejas con mas de $10000</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Tipos de Artiuclos no regalados</a>
+                    <a class="dropdown-item" href="reportes?action=4">Tipos de Artiuclos no regalados</a>
                 </div>
             </li>
 
