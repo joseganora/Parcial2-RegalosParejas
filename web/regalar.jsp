@@ -21,8 +21,9 @@
             function elegir(id) {
                 location.href = "regalar.jsp?parejaSelect=" + id;
             }
-            function regalar(id){
+            function regalar(id,denom){
                 $('#idArticulo').val(id);
+                $('#tituloModal').text("Regalar "+denom);
                 $('#regalar').modal("show");
             }
         </script>
@@ -63,7 +64,7 @@
                             <%
                                 }
                             %>
-                            <%=par.getNombre1()%> y <%=par.getNombre2()%> (<%=par.getFechaCasamientoTexto()%>) <span class="badge badge-primary badge-pill"><%=c.countRegalosPendientes(par.getId())%></span></button>
+                            <%=par.getNombre1()%> <%=par.getApellido1()%> y <%=par.getNombre2()%> <%=par.getApellido2()%> (<%=par.getFechaCasamientoTexto()%>) <span class="badge badge-primary badge-pill" ><%=c.countRegalosPendientes(par.getId())%></span></button>
                             <%
                                 }
                             %>
@@ -88,7 +89,7 @@
                                 <%
                                 for (Articulo r : regalos) {
                                         %>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center"><div>(<%=r.getCodigo()%>) <%=r.getDenominacion()%> - $ <%=r.getPrecioUnitario()%></div><a href="#" onclick="regalar(<%=r.getId()%>)"><img src="regalo.png"/></a></li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center"><div>(<%=r.getCodigo()%>) <%=r.getDenominacion()%> - $ <%=r.getPrecioUnitario()%></div><a href="#" onclick="regalar(<%=r.getId()%>,'<%=r.getDenominacion()%>')" title="Regalar <%=r.getDenominacion()%>"><img src="regalo.png"/></a></li>
                                             <%
                                     }
                                             %>
@@ -116,7 +117,7 @@
             <div  class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Regalar</h5>
+                        <h5 class="modal-title" id="tituloModal">Regalar</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>

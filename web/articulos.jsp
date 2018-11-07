@@ -56,7 +56,7 @@
                 </div>
             </div>
             
-            <div class="container" style="max-height: 600px;display: flex;">
+            <div class="container" style="max-height: 400px;display: flex;">
 
                 <ul class="list-group" style="overflow-y:scroll;width: 100%;">
                         <c:forEach items="${list}" var="r">

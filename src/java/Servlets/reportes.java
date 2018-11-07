@@ -5,6 +5,7 @@
  */
 package Servlets;
 
+import controlador.AuxiliarArticuloCant;
 import controlador.conexion;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.Comercio;
 import modelo.Pareja;
+import modelo.TipoArticulo;
 
 /**
  *
@@ -51,12 +53,18 @@ public class reportes extends HttpServlet {
                     jsp="parejasPorComercio";
                     break;
                 case 2: 
+                    float totalFacturado=c.getTotalFacturado();
+                    request.setAttribute("total", totalFacturado);
                     jsp="facturacionPorPareja";
                     break;
                 case 3:
+                    ArrayList<Pareja> par=c.getParejasMasDe10();
+                    request.setAttribute("parejas", par);
                     jsp="parejasMasDe10m";
                     break;
                 case 4: 
+                    ArrayList<AuxiliarArticuloCant> cant=c.getCountArticulosNoRegaladorPorTipo() ;
+                    request.setAttribute("cant", cant);
                     jsp="cantidadNoRegalados";
                     break;
                 default: ;

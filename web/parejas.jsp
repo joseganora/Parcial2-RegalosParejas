@@ -56,7 +56,7 @@
             </div>
             <ul class="list-group">
                 <c:forEach items="${list}" var="r">
-                    <li class="list-group-item  d-flex justify-content-between align-items-center"> ${r.nombre1} y ${r.nombre2} (${r.fechaCasamientoTexto})
+                    <li class="list-group-item  d-flex justify-content-between align-items-center"> ${r.nombre1} ${r.apellido1} y ${r.nombre2} ${r.apellido2}
                         <div>
                             <a class="badge-pill"href="#" onclick="editar(${r.id})"><img src="baseline-edit-24px.svg"/></a>
                             <a class="badge-pill" href="#" onclick="borrar(${r.id})"><img src="baseline-delete-24px.svg"/></a>

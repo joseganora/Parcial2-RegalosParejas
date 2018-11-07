@@ -52,7 +52,9 @@
                 </div>
 
             </div>
-            <ul class="list-group">
+            <div class="container" style="max-height: 400px;display: flex;">
+
+                <ul class="list-group" style="overflow-y:scroll;width: 100%;">
                 <c:forEach items="${list}" var="r">
                     <li class="list-group-item  d-flex justify-content-between align-items-center"> 
                         <div><b>${r.nombre}</b>, 
@@ -69,13 +71,14 @@
                         </c:forEach>
                         </div>
                         <div>
-                            <a class="badge-pill"href="#" onclick="editar(${r.id})"><img src="baseline-edit-24px.svg"/></a>
-                            <a class="badge-pill" href="#" onclick="borrar(${r.id})"><img src="baseline-delete-24px.svg"/></a>
+                            <a class="badge-pill"href="#" onclick="editar(${r.id})"  title="Editar Comprador"><img src="baseline-edit-24px.svg"/></a>
+                            <a class="badge-pill" href="#" onclick="borrar(${r.id})" title="Eliminar Comprador"><img src="baseline-delete-24px.svg"/></a>
                         </div>
 
                     </li>
                 </c:forEach>
             </ul>
+            </div>
             <br>
 
             <button type="button" data-toggle="modal" data-target="#agregar" class="btn btn-primary">Agregar</button>

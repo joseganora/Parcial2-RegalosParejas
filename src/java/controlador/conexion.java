@@ -581,6 +581,54 @@ public class conexion {
         
         return art;
     }
+     
+    public ArrayList<AuxiliarArticuloCant> getCountArticulosNoRegaladorPorTipo() {
+        ArrayList<AuxiliarArticuloCant> a=new ArrayList<>();
+        ArrayList<TipoArticulo> tipo=getTipoArticulos();
+        for (TipoArticulo tipoArticulo : tipo) {
+            a.add(new AuxiliarArticuloCant(tipoArticulo));
+        }
+        try {
+            abrirConexion();
+            PreparedStatement stmt=con.prepareStatement("select idTipo,count(id) cant from articulo where id in (select  DISTINCT a.id from regalo r join  articulo a on r.idArticulo=a.id where r.regalado=0) group by idTipo order by idTipo");
+            ResultSet rs =stmt.executeQuery();
+            while(rs.next()){
+                for (AuxiliarArticuloCant aux : a) {
+                    if(aux.getA().getId()==rs.getInt("idTipo")){
+                        aux.setCant(rs.getInt("cant"));
+                    }
+                }
+            }
+            
+            rs.close();
+            stmt.close();
+            cerrarConexion();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(conexion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return a;
+    }
+    public ArrayList<Pareja> getParejasMasDe10() {
+       ArrayList<Pareja> art=new ArrayList<Pareja>();
+        try {
+            abrirConexion();
+            PreparedStatement stmt=con.prepareStatement("select * from pareja where id in (select p.id from pareja p join regalo r on p.id=r.idPareja join articulo a on a.id=r.idArticulo where r.regalado=1 group by p.id HAVING  sum(a.precioUnitario*r.cantidad)>10000)");
+            ResultSet rs =stmt.executeQuery();
+            while(rs.next()){
+                art.add(new Pareja(rs.getInt("id"), rs.getString("nombre1"), rs.getString("apellido1"), rs.getString("nombre2"), rs.getString("apellido2"),rs.getDate("fechaCasamiento"),rs.getInt("idComercio")));
+            }
+            rs.close();
+            stmt.close();
+            cerrarConexion();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(conexion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return art;
+    }
 
     public ArrayList<Comercio> getComercio() {
         ArrayList<Comercio> art=new ArrayList<Comercio>();
@@ -658,6 +706,28 @@ public class conexion {
         
         return art;
     }
+
+    public float getTotalFacturado() {
+        float total=0;
+        try {
+            abrirConexion();
+            PreparedStatement stmt=con.prepareStatement("select sum(a.precioUnitario*r.cantidad) total from regalo r join articulo a on r.idArticulo=a.id where r.regalado=1");
+            ResultSet rs =stmt.executeQuery();
+            if(rs.next()){
+                total=rs.getFloat("total");
+            }
+            rs.close();
+            stmt.close();
+            cerrarConexion();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(conexion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return total;
+    }
+
+    
 
     
 

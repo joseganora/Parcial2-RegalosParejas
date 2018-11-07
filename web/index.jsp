@@ -62,7 +62,7 @@
                             <%
                                 }
                             %>
-                            <%=par.getNombre1()%> y <%=par.getNombre2()%> (<%=par.getFechaCasamientoTexto()%>) <span class="badge badge-primary badge-pill"><%=c.countRegalosPendientes(par.getId())%></span></button>
+                            <%=par.getNombre1()%> <%=par.getApellido1()%> y <%=par.getNombre2()%> <%=par.getApellido2()%>  (<%=par.getFechaCasamientoTexto()%>) <span class="badge badge-primary badge-pill"><%=c.countRegalosPendientes(par.getId())%></span></button>
                             <%
                                 }
                             %>
