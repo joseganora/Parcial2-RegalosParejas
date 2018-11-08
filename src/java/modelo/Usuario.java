@@ -13,13 +13,30 @@ public class Usuario {
 private String nombre;
 private String contra;
 private int id;
+private boolean autenticado;
 
     public Usuario(String nombre, String contra, int id) {
         this.nombre = nombre;
         this.contra = contra;
         this.id = id;
+        autenticado=false;
+    }
+    public Usuario(String nombre, String contra) {
+        this.nombre = nombre;
+        this.contra = contra;
+        this.id = -1;
+        autenticado=false;
     }
 
+    public void autenticar(){
+        autenticado=true;
+
+    }
+
+    public boolean isAutenticado() {
+        return autenticado;
+    }
+    
     public String getNombre() {
         return nombre;
     }

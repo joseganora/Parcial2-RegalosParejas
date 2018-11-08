@@ -53,16 +53,16 @@ public class conexion {
             con.close();
 
     }
-    public Usuario getUsuario(String nombre,String contra){
-        Usuario user=null;
+    public int existeUsuario(Usuario u){
+        int user=0;
         try {
             abrirConexion();
-            PreparedStatement stmt=con.prepareStatement("SELECT * from usuario where nombre=? and contrasenia=?");
-            stmt.setString(1, nombre);
-            stmt.setString(2, contra);
+            PreparedStatement stmt=con.prepareStatement("SELECT id from usuario where nombre=? and contrasenia=?");
+            stmt.setString(1, u.getNombre());
+            stmt.setString(2, u.getContra());
             ResultSet rs =stmt.executeQuery();
             if(rs.next()){
-                user=new Usuario(rs.getString("nombre"), rs.getString("contrasenia"), rs.getInt("id"));
+                user= rs.getInt("id");
             }
             rs.close();
             stmt.close();

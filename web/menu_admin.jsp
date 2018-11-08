@@ -4,6 +4,7 @@
     Author     : PEPE
 --%>
 
+<%@page import="modelo.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
@@ -49,9 +50,9 @@
         </ul>
 
         <%
-            Object o = request.getSession().getAttribute("nombreUsuario");
-            if (o != null) {
-                out.print((String) o);
+            Usuario o = (Usuario)request.getSession().getAttribute("usuario");
+            if (o != null && o.isAutenticado()) {
+                out.print((String) o.getNombre());
             } else {
                 request.setAttribute("error", "error");
                 getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import modelo.Usuario;
 
 /**
  *
@@ -37,16 +38,21 @@ public class loguin extends HttpServlet {
         String nombreUsuario=request.getParameter("user");
         String contraUsuario=request.getParameter("contra");
         String url="";
-        if(c.getUsuario(nombreUsuario, contraUsuario)!=null){
+        Usuario u=new Usuario(nombreUsuario, contraUsuario);
+        int id=c.existeUsuario(u);
+        if(id>0){
             //acceder
             url="/admin.jsp";
-            HttpSession sesion=request.getSession(true);
-            sesion.setAttribute("nombreUsuario", nombreUsuario);
+            u.setId(id);
+            u.autenticar();
+            
         }else{
             //no hay usuario
             request.setAttribute("error", "error");
             url="/index.jsp";
         }
+        HttpSession sesion=request.getSession(true);
+        sesion.setAttribute("Usuario", u);
         getServletContext().getRequestDispatcher(url).forward(request, response);
     }
 
