@@ -159,7 +159,7 @@
     <%
         }
         if (request.getParameter("salir") != null) {
-            request.getSession().removeAttribute("nombreUsuario");
+            request.getSession().removeAttribute("Usuario");
         }
     %>
 </body>

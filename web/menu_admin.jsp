@@ -50,7 +50,7 @@
         </ul>
 
         <%
-            Usuario o = (Usuario)request.getSession().getAttribute("usuario");
+            Usuario o = (Usuario)request.getSession().getAttribute("Usuario");
             if (o != null && o.isAutenticado()) {
                 out.print((String) o.getNombre());
             } else {
@@ -58,7 +58,7 @@
                 getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
             }
         %>&nbsp;&nbsp;
-        <form class="form-inline my-2 my-lg-0" action="index.jsp">
+        <form class="form-inline my-2 my-lg-0" action="index.jsp" method="POST">
             <input  type="hidden" value="salir" name="salir"/>
             <button class="btn btn-outline-success" type="submit" 
                     >Salir</button>
