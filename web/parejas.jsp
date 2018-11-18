@@ -15,7 +15,7 @@
         <script>
        
             function borrar(id) {
-                var r = confirm("¿Seguro que desea borrar este producto?");
+                var r = confirm("¿Seguro que desea borrar esta pareja? Se borrará la lista de regalos asociada");
                 if (r == true) {
                     location.href = "parejas?action=borrar&id=" + id;
                 }

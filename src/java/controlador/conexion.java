@@ -78,7 +78,7 @@ public class conexion {
         int cant=0;
         try {
             abrirConexion();
-            PreparedStatement stmt=con.prepareStatement("SELECT count(*) cant from regalo where idPareja=? and idComprador is null");
+            PreparedStatement stmt=con.prepareStatement("SELECT count(*) cant from regalo where idPareja=? and regalado=0");
             stmt.setInt(1, id);
             ResultSet rs =stmt.executeQuery();
             if(rs.next()){
@@ -97,7 +97,7 @@ public class conexion {
         ArrayList<Articulo> art=new ArrayList<Articulo>();
         try {
             abrirConexion();
-            PreparedStatement stmt=con.prepareStatement("SELECT a.* from Articulo a join regalo r on a.id=r.idArticulo where r.idPareja=? and r.idComprador is null");
+            PreparedStatement stmt=con.prepareStatement("SELECT a.* from Articulo a join regalo r on a.id=r.idArticulo where r.idPareja=? and r.regalado=0");
             stmt.setInt(1, idParejaSeleccionada);
             ResultSet rs =stmt.executeQuery();
             while(rs.next()){
@@ -346,7 +346,10 @@ public class conexion {
         boolean band=false;
         try {
             abrirConexion();
-            PreparedStatement stmt=con.prepareStatement("delete articulo where id=?");
+            PreparedStatement stmt=con.prepareStatement("delete regalo where idArticulo=?");
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+             stmt=con.prepareStatement("delete articulo where id=?");
             stmt.setInt(1, id);
             band=(stmt.executeUpdate()==1);
             stmt.close();
@@ -373,11 +376,16 @@ public class conexion {
         }
         return band;
     }
+    
     public boolean borrarComprador(int id) {
         boolean band=false;
         try {
             abrirConexion();
-            PreparedStatement stmt=con.prepareStatement("delete comprador where id=?");
+            //coloco el idComprador en null porque no creo que deba perderse el dato del articulo regalado
+            PreparedStatement stmt=con.prepareStatement("update regalo set idComprador=NULL where idComprador=?");
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+            stmt=con.prepareStatement("delete comprador where id=?");
             stmt.setInt(1, id);
             band=(stmt.executeUpdate()==1);
             stmt.close();
@@ -392,7 +400,10 @@ public class conexion {
         boolean band=false;
         try {
             abrirConexion();
-            PreparedStatement stmt=con.prepareStatement("delete pareja where id=?");
+            PreparedStatement stmt=con.prepareStatement("delete regalo where idPareja=?");
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+            stmt=con.prepareStatement("delete pareja where id=?");
             stmt.setInt(1, id);
             band=(stmt.executeUpdate()==1);
             stmt.close();

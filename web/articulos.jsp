@@ -17,7 +17,7 @@
         <title>JSP Page</title>
         <script>
             function borrar(id) {
-                var r = confirm("¿Seguro que desea borrar este producto?");
+                var r = confirm("¿Seguro que desea borrar este articulo? Se borrarán tambien los regalos asociados a este producto");
                 if (r == true) {
                     location.href = "articulos?action=borrar&id=" + id;
                 }
